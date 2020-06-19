@@ -7,10 +7,10 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.marshalling.sse.EventStreamMarshalling._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.scaladsl.{Sink, Source}
+import common.implementation.persistence.mongo.MongoPersistenceSink
 import edition.domain.Models
 import edition.domain.Models.{EditionInfo, EditionNames, MtgEdition}
 import edition.domain.server.BatchToServerSentEventSupport
-import edition.implementation.persistance.mongo.MongoPersistenceSink
 import edition.implementation.persistance.mongo.MongoRepository._
 
 import scala.concurrent.{ExecutionContextExecutor, Future}

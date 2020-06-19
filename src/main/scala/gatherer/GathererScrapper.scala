@@ -3,7 +3,9 @@ package gatherer
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
 import org.jsoup.nodes.Document
-import Documents._
+import gatherer.implementation.Documents._
+import gatherer.domain.Models.Card
+import gatherer.domain.midToDocuments.MidToDocuments
 
 import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
@@ -48,35 +50,34 @@ object GathererScrapper {
     }
 
   private def extractCard(implicit ec : ExecutionContext) : MidToDocuments => Future[Card] =
-    midToDocs => {
-      import Extractors._
+    implicit midToDocs => {
+      import gatherer.implementation.Extractors._
       for {
-        languages <- languages(midToDocs)
+        languages <- LanguagesExtractor.extract
       } yield {
-        implicit val mid: MidToDocuments = midToDocs
         Card(
           mid = midToDocs.mid,
-          id = id,
-          name = name,
-          manaCost = manaCost,
-          cmc = cmc,
-          colors = colors,
-          colorIdentity = colorIdentity,
-          types = types,
-          superTypes = superTypes,
-          subTypes = subTypes,
-          cardText = cardText,
-          flavorText = flavorText,
-          power = power,
-          toughness = toughness,
-          loyalty = loyalty,
-          expansion = expansion,
-          rarity = rarity,
-          cardNumberInSet = cardNumberInSet,
-          artist = artist,
-          editionCode = editionCode,
-          rulings = rulings,
-          legalities = legalities,
+          id = IdExtractor.extract,
+          name = NameExtractor.extract,
+          manaCost = ManaCostExtractor.extract,
+          cmc = ConvertedManaCostExtractor.extract,
+          colors = ColorExtractor.extract,
+          colorIdentity = ColorIdentityExtractor.extract,
+          types = TypesExtractor.extract,
+          superTypes = SuperTypesExtractor.extract,
+          subTypes = SubTypesExtractor.extract,
+          cardText = CardTextExtractor.extract,
+          flavorText = FlavorTextExtractor.extract,
+          power = PowerExtractor.extract,
+          toughness = ToughnessExtractor.extract,
+          loyalty = LoyaltyExtractor.extract,
+          edition = EditionExtractor.extract,
+          rarity = RarityExtractor.extract,
+          cardNumberInSet = CardNumberInSetExtractor.extract,
+          artist = ArtistExtractor.extract,
+          editionCode = EditionCodeExtractor.extract,
+          rulings = RulingsExtractor.extract,
+          legalities = LegalitiesExtractor.extract,
           languages = languages
         )
       }

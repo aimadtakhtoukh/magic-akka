@@ -1,6 +1,7 @@
 package gatherer
 
 import akka.actor.ActorSystem
+import common.implementation.persistence.mongo.MongoPersistenceSink
 
 import scala.concurrent.ExecutionContextExecutor
 

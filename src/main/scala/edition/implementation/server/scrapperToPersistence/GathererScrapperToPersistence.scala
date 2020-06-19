@@ -1,8 +1,8 @@
 package edition.implementation.server.scrapperToPersistence
 
 import akka.actor.ActorSystem
+import common.implementation.persistence.mongo.MongoPersistenceSink
 import edition.domain.Models.GathererNameToCode
-import edition.implementation.persistance.mongo.MongoPersistenceSink
 import edition.implementation.persistance.mongo.MongoRepository._
 import edition.implementation.scrappers.gatherer.MagicCardSetGathererScrapperSource
 

@@ -1,6 +1,7 @@
 package gatherer
 
 import com.typesafe.config.{Config, ConfigFactory}
+import gatherer.domain.Models.{Card, Language, LegalityInFormat, Ruling}
 import org.bson.codecs.configuration.CodecRegistries.{fromProviders, fromRegistries}
 import org.mongodb.scala.MongoClient.DEFAULT_CODEC_REGISTRY
 import org.mongodb.scala.bson.codecs.Macros._
@@ -12,7 +13,7 @@ object MongoRepository {
   private val codecRegistry = fromRegistries(
     fromProviders(
       classOf[Ruling],
-      classOf[Legality],
+      classOf[LegalityInFormat],
       classOf[Language],
       classOf[Card]
     ),

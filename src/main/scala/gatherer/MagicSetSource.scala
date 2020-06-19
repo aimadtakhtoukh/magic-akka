@@ -2,7 +2,7 @@ package gatherer
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source
-import Documents.{gathererDefaultPageUrl, getDocument}
+import gatherer.implementation.Documents.{gathererDefaultPageUrl, getDocument}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.jdk.CollectionConverters._
@@ -21,6 +21,6 @@ object MagicSetSource {
 
   def allMagicSetSource(implicit ec: ExecutionContext) : Source[String, NotUsed] = Source.future(magicSetList).flatMapConcat(Source(_))
 
-  def magicSetFromString(sets : List[String]) : Source[String, NotUsed] = Source(sets)
+  def magicSetFromString(firstSet : String, sets : String*) : Source[String, NotUsed] = Source(firstSet :: sets.toList)
 
 }

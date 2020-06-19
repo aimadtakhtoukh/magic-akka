@@ -1,13 +1,12 @@
 package edition.implementation.persistance.mongo
 
 import com.typesafe.config.{Config, ConfigFactory}
-import org.bson.codecs.configuration.CodecRegistries
-import org.bson.codecs.configuration.CodecRegistries.{fromProviders, fromRegistries}
+import edition.domain.Models.{EditionInfo, EditionNames, GathererNameToCode, MtgEdition}
+import common.implementation.persistence.mongo.codec.YearMonthCodec
+import org.bson.codecs.configuration.CodecRegistries.{fromProviders, fromRegistries, fromCodecs}
 import org.mongodb.scala.MongoClient.DEFAULT_CODEC_REGISTRY
 import org.mongodb.scala.bson.codecs.Macros._
 import org.mongodb.scala.{MongoClient, MongoCollection, MongoDatabase}
-import edition.domain.Models.{EditionInfo, EditionNames, GathererNameToCode, MtgEdition}
-import edition.implementation.persistance.mongo.codec.YearMonthCodec
 
 object MongoRepository {
   private val config : Config = ConfigFactory.load()
@@ -19,7 +18,7 @@ object MongoRepository {
       classOf[GathererNameToCode],
       classOf[EditionInfo]
     ),
-    CodecRegistries.fromCodecs(new YearMonthCodec()),
+    fromCodecs(new YearMonthCodec()),
     DEFAULT_CODEC_REGISTRY
   )
 

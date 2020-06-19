@@ -7,7 +7,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.marshalling.sse.EventStreamMarshalling._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.scaladsl.Source
-import edition.domain.persistance.PersistenceSink
+import common.domain.persistence.PersistenceSink
 import edition.domain.scrappers.ScrapperSource
 import edition.domain.server.BatchToServerSentEventSupport
 
