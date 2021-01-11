@@ -18,18 +18,18 @@ object midToDocuments {
                             legalityDocument : Document)
 
   object MidToDocuments {
-    def apply(cardName : String, mid : MultiverseId, setCode : SetCode)(implicit ec : ExecutionContext): Future[List[MidToDocuments]] =
+    def apply(cardName : String, mid : MultiverseId, setCode : SetCode)(implicit ec : ExecutionContext): Future[List[MidToDocuments]] = {
+      import scala.jdk.CollectionConverters._
       for {
         detailsDocument <- getDocument(detailsUrl(mid))
         languageDocument <- getLanguageDocuments(mid)
         legalityDocument <- getDocument(legalityUrl(mid))
       } yield {
-        import scala.jdk.CollectionConverters._
         detailsDocument
           .select(".cardComponentContainer")
           .asScala
           .toList
-          .filter(container => container.select("[id$=nameRow] .value").text().equals(cardName))
+          .filter(_.select("[id$=nameRow] .value").text().equals(cardName))
           .map(
             MidToDocuments(
               mid,
@@ -41,6 +41,6 @@ object midToDocuments {
             )
           )
       }
+    }
   }
-
 }

@@ -2,7 +2,7 @@ name := "magic-akka"
 
 version := "0.1"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.3"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.6.3",

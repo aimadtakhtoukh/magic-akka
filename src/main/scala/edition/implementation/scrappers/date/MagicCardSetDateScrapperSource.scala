@@ -29,7 +29,7 @@ class MagicCardSetDateScrapperSource(implicit system: ActorSystem, executionCont
 
   def source: Source[MtgEdition, NotUsed] =
     Source.future(s"$domain/Set".requestToDocument())
-      .mapConcat(document => (document select "table.wikitable.sortable.mw-collapsible.wrapped-table > tbody tr").asScala.toList)
+      .mapConcat(document => (document select "table.wikitable.sortable.mw-collapsible > tbody tr").asScala.toList)
       .filterNot(_.select("td:nth-child(6)").text().contains("Magic Encyclopedia"))
       .mapAsync(4)(
         c => {

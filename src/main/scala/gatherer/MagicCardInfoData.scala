@@ -31,10 +31,7 @@ object MagicCardInfoData extends App {
             .map(writePretty(_))
             .reduce((acc : String, i : String) => s"$acc,\n$i")
             .map(json => s"[\n$json\n]")
-            .recover {
-              case t : Throwable =>
-                t.getMessage
-            }
+            .recover { case t : Throwable => t.getMessage}
             .map(ByteString(_))
             .runWith(FileIO.toPath(editionPath))
         } else {
@@ -42,10 +39,7 @@ object MagicCardInfoData extends App {
         }
       }
     }
-    .recover {
-      case t : Throwable =>
-        t.getMessage
-    }
+    .recover { case t : Throwable => t.getMessage}
     .runForeach(println)
     .onComplete {
       _ => system.terminate()
