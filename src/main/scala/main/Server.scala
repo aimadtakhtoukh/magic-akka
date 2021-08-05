@@ -1,17 +1,18 @@
 package main
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorSystem, Scheduler}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
-import edition.domain.server.BatchToServerSentEventSupport
-import edition.implementation.server.curation.EditionCurationAndPersistence
-import edition.implementation.server.scrapperToPersistence._
+import domain.edition.server.BatchToServerSentEventSupport
+import implementation.edition.server.curation.EditionCurationAndPersistence
+import implementation.edition.server.scrapperToPersistence._
 
 import scala.concurrent.ExecutionContextExecutor
 
 object Server extends App {
   implicit val system: ActorSystem = ActorSystem("Scrapping_Jobs")
   implicit val ec: ExecutionContextExecutor = system.dispatcher
+  implicit val scheduler: Scheduler = system.scheduler
 
   val magicCardSetScrapAndSave = new MagicCardSetArchiveScrapperToPersistence()
   val gathererScrapAndSave = new GathererScrapperToPersistence()
